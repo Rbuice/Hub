@@ -32,6 +32,7 @@ task Client(type: JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
 
   main = 'SockClient'
-  args "localhost"
-  args 8888
+  if (project.hasProperty("host") && project.hasProperty("port")) {
+    args(project.getProperty('host'), project.getProperty('port'));
+  }
 }

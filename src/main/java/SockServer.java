@@ -182,6 +182,7 @@ public class SockServer {
   // implement me in assignment 3
   static JSONObject names(JSONObject req) {
       JSONObject res = testField(req, "name");
+      String holder = "";
       if (!res.getBoolean("ok")) {
         return res;
       }
@@ -197,24 +198,33 @@ public class SockServer {
           res.put("message", "error with contains");
       }
       if(contains == true) {
+          for(int i = 0; i < namecount; i++) {
+              holder = holder + names[i] + " ";
+          }
           res.put("ok", false);
           res.put("type", "names");
           res.put("message", "already used");
-          res.put("allNames", Arrays.toString(names));
+          res.put("allNames", holder);
       }
       else if (contains == false){
           if(!req.getString("name").equals("")) {
               names[namecount] = req.getString("name");
               namecount++;
+              for(int i = 0; i < namecount; i++) {
+                  holder = holder + names[i] + " ";
+              }
               res.put("ok", true);
               res.put("type", "names");
               res.put("result", req.getString("name"));
-              res.put("allNames", Arrays.toString(names));
+              res.put("allNames", holder);
           }
           else {
+              for(int i = 0; i < namecount; i++) {
+                  holder = holder + names[i] + " ";
+              }
               res.put("ok", true);
               res.put("type", "names");
-              res.put("allNames", Arrays.toString(names));
+              res.put("allNames", holder);
           }
       }
       else if (namecount == 0) {
@@ -223,9 +233,12 @@ public class SockServer {
           res.put("message", "list empty");
       }
       else{
+          for(int i = 0; i < namecount; i++) {
+              holder = holder + names[i] + " ";
+          }
           res.put("ok", true);
           res.put("type", "names");
-          res.put("allNames", Arrays.toString(names));
+          res.put("allNames", holder);
       }
       return res;
   }
